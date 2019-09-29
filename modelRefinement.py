@@ -6,7 +6,7 @@ Created on Sun Jun 16 23:37:18 2019
 """
 
 # import the self-made common module that contains all the functions and other packages required
-import common
+from common import *
 
 # Get the files and create two dictionaries to convert the fruit name to the target and the target back to the fruit name
 print("Getting files")
@@ -32,7 +32,8 @@ test_tensors = paths_to_tensor(test_files).astype('float32')/255
 internet_tensors= paths_to_tensor(internet_paths).astype('float32')/255
 
 # Start the iteration   
-# Find all the json files (saved model)                       
+# Find all the json files (saved model)     
+print("Creating dataframe to track stats")                  
 models=glob('model_refinement'+'/*.json')
 
 models_idx = [i for i in range(1, len(models)+1)]
@@ -46,10 +47,11 @@ model_refinement_df['internetAccuracy']=np.nan
            
 model_refinement_df.to_csv('model_refinement_df.csv',index_label='index')
 
+print("Running iteration")
 # Iterate through that dataframe
 for index,row in model_refinement_df.iterrows():
 	# Reload the dataframe
-	model_refinement_df=pd.read_csv('model_refinement_df.csv',index_col='index')
+    model_refinement_df=pd.read_csv('model_refinement_df.csv',index_col='index')
 	# If the dataframe already has results for this row, do not need to test again
     if not np.isnan(row['trainAccuracy']):
         print('Opening '+row['fileName'])   

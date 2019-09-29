@@ -6,7 +6,7 @@ Created on Sun Jun 16 23:37:18 2019
 """
 
 # import the self-made common module that contains all the functions and other packages required
-import common
+from common import *
 
 # Get the files and create two dictionaries to convert the fruit name to the target and the target back to the fruit name
 print("Getting files")
@@ -37,17 +37,15 @@ if not os.path.exists('saved_models'):
 # Create the final model                              
 model = Sequential()
 model.add(Conv2D(filters=16, kernel_size=5, padding='same', activation='relu',input_shape=(100, 100, 3)))
-model.add(MaxPooling2D(pool_size=2))
+model.add(MaxPooling2D(pool_size=3))
 model.add(Conv2D(filters=32, kernel_size=5, padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 model.add(Conv2D(filters=64, kernel_size=5, padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=128, kernel_size=5, padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=2))
 model.add(Flatten())
-model.add(Dense(1024, activation='relu'))
+model.add(Dense(2056, activation='relu'))
 model.add(Dropout(0.2))
-model.add(Dense(256, activation='relu'))
+model.add(Dense(512, activation='relu'))
 model.add(Dropout(0.2))
 model.add(Dense(len(fruits), activation='softmax'))
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])

@@ -6,7 +6,7 @@ Created on Sun Jun 16 23:37:18 2019
 """
 
 # import the self-made common module that contains all the functions and other packages required
-import common
+from common import *
 
 # Get the files and create two dictionaries to convert the fruit name to the target and the target back to the fruit name
 print("Getting files")
@@ -68,7 +68,7 @@ for index,row in grid_search_df.iterrows():
     model.add(Dropout(row['dropout1']))
     model.add(Dense(512, activation='relu'))
     model.add(Dropout(row['dropout2']))
-    model.add(Dense(87, activation='softmax'))
+    model.add(Dense(len(fruits), activation='softmax'))
       
     model.compile(optimizer=row['optimizer'], loss='categorical_crossentropy', metrics=['accuracy'])
     
@@ -77,7 +77,7 @@ for index,row in grid_search_df.iterrows():
     checkpointer = ModelCheckpoint(filepath='variable_refinement/weights.best.from_scratch.hdf5', verbose=0, save_best_only=True)
     print("Running model")
     start=datetime.datetime.now()
-    history=model.fit(train_tensors, train_targets, validation_data=(valid_tensors, valid_targets), epochs=epochs, batch_size=20, callbacks=[checkpointer], verbose=0)
+    history=model.fit(train_tensors, train_targets, validation_data=(valid_tensors, valid_targets), epochs=epochs, batch_size=20, callbacks=[checkpointer], verbose=1)
     end=datetime.datetime.now() 
     print(str(end-start))
     grid_search_df.at[index,'trainAccuracy']=history.history['acc'][-1]

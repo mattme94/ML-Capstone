@@ -5,7 +5,7 @@ Created on Sun Jun 16 23:37:18 2019
 @author: Matthew
 """
 
-import common
+from common import *
 
 #Define the variables to be used
 kernel_sizes=[[5,5,5,5,5],[7,5,5,5,5],[7,7,5,5,5],[7,7,7,7,5],[7,7,7,7,7],[3,5,5,5,5],[3,3,5,5,5],[3,3,3,3,5],[3,3,3,3,3]]
@@ -15,10 +15,13 @@ layersDict={0:'3Conv2DLayers',1:'Base',2:'5Conv2DLayers'}
 denses1=[1024,2048]
 denses2=[256,512]
 
+fruits = list(set([ re.sub(r'\d+', '', item[16:-1]).strip() for item in sorted(glob("fruits/Training/*/"))]))
+
 # if variable refinement does not exist, create it
 if not os.path.exists('model_refinement'):
     os.makedirs('model_refinement')
 
+print("Creating models")
 # Iterate through all the variables to produce the models
 for layer in layers:
     for kernel,kernel_size in enumerate(kernel_sizes):
@@ -49,8 +52,10 @@ for layer in layers:
                     model.add(Dropout(0.2))
                     model.add(Dense(dense2, activation='relu'))
                     model.add(Dropout(0.2))
-                    model.add(Dense(87, activation='softmax'))
-                    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+                    model.add(Dense(len(fruits), activation='softmax'))
                     json_string = model.to_json()
                     with open('model_refinement/model_'+layersDict[layer]+';dense1_'+str(dense1)+';dense2_'+str(dense2)+';maxpooling_pool_size_'+str(pool_sizes[1][1])+'_to_'+str(pool_sizes[1][0])+'_layer'+str(pool)+';conv2d_kernel_size_'+str(kernel_sizes[1][1])+'_to_'+str(kernel_sizes[1][0])+'_layer'+str(kernel)+'.json', 'w') as file:
                         file.write(json_string)
+                    K.clear_session()
+                    gc.collect()
+                    del model
