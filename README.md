@@ -26,6 +26,6 @@ There are five python scripts in the repository:
 
 ## Dataset
 
-The dataset can be downloaded [here](http://https://www.kaggle.com/moltean/fruits/ "Dataset").
+The dataset can be downloaded [here](kaggle.com/moltean/fruits/ "Dataset").
 
 The data should be placed in the *fruits* folder so that the *Test* and *Training* folders of the dataset are on the same level as *internet*.
