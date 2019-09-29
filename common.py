@@ -58,7 +58,7 @@ def path_to_tensor(img_path):
     img = image.load_img(img_path, target_size=(100, 100))
     # convert PIL.Image.Image type to 3D tensor with shape (100, 100, 3)
     x = image.img_to_array(img)
-    # convert 3D tensor to 4D tensor with shape (1, 224, 224, 3) and return 4D tensor
+    # convert 3D tensor to 4D tensor with shape (1, 100, 100, 3) and return 4D tensor
     return np.expand_dims(x, axis=0)
 
 def paths_to_tensor(img_paths):
@@ -81,3 +81,8 @@ def resizeImages(path):
         img.save(image_dir+'_resized\\'+image_name)
         new_path.append(image_dir+'_resized\\'+image_name)
     return new_path,targets
+
+def getDataframes(tensors,targets,name):
+    intensity=pd.DataFrame(list(zip([invFruitDict[np.argmax(x)] for x in targets],[(np.mean(x, axis=2)).mean() for x in tensors],[(np.std(x, axis=2)).std() for x in tensors])), columns= ['Fruit','Average Intensity','STD Intensity'])
+    print('The average intensity of the '+name+' images is: %.4f with an standard deviation of %.4f.' % (intensity['Average Intensity'].mean(axis=0),intensity['STD Intensity'].mean(axis=0)))
+    return intensity

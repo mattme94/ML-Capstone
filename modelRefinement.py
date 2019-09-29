@@ -11,7 +11,7 @@ from common import *
 # Get the files and create two dictionaries to convert the fruit name to the target and the target back to the fruit name
 print("Getting files")
 fruits = list(set([ re.sub(r'\d+', '', item[16:-1]).strip() for item in sorted(glob("fruits/Training/*/"))]))
-fruitDict=dict(zip(fruits,list(range(0,len(fruits)+0))))
+fruitDict=dict(zip(fruits,list(range(0,len(fruits)+0)))) 
 invFruitDict=dict(zip(list(range(0,len(fruits)+0)),fruits))
 
 # Load the datasets in 

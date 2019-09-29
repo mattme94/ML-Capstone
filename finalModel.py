@@ -31,6 +31,21 @@ test_tensors = paths_to_tensor(test_files).astype('float32')/255
 (internet_paths,targets)=resizeImages('fruits/internet')
 internet_tensors= paths_to_tensor(internet_paths).astype('float32')/255
 
+# Get Stats
+intensity_train=getDataframes(train_tensors, train_targets, 'training')
+intensity_valid=getDataframes(valid_tensors, valid_targets, 'validation')
+intensity_test=getDataframes(test_tensors, test_targets, 'test')
+
+intensity=pd.concat([intensity_train,intensity_valid,intensity_test], ignore_index=True)
+print('The average intensity of all images is: %.4f with an standard deviation of %.4f.' % (intensity['Average Intensity'].mean(axis=0),intensity['STD Intensity'].mean(axis=0)))
+intensity_fruit=intensity.groupby('Fruit').mean()
+
+intensity_fruit_max=(intensity_fruit.loc[intensity_train_fruit['Average Intensity'].idxmax()])
+print('The image class with the max intesnity is %s with an average intensity of %.4f and an standard deviation of %.4f.' % (intensity_fruit_max.name, intensity_fruit_max['Average Intensity'],intensity_fruit_max['STD Intensity']))
+
+intensity_fruit_min=(intensity_fruit.loc[intensity_train_fruit['Average Intensity'].idxmin()])
+print('The image class with the min intesnity is %s with an average intensity of %.4f and an standard deviation of %.4f.' % (intensity_fruit_min.name, intensity_fruit_min['Average Intensity'],intensity_fruit_min['STD Intensity']))
+
 if not os.path.exists('saved_models'):
     os.makedirs('saved_models')
 
