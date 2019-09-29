@@ -1,5 +1,7 @@
 # ML-Capstone
 
+This is the git repo for my machine learning nanodegree capstone project. I examined the use of CNNs to indentify fruits from still images. This was built and ran on python 3.7.3. 
+
 There are five python scripts in the repository:
 
 * common.py contains the common functions as well as all of the importing as packages
@@ -14,17 +16,16 @@ There are five python scripts in the repository:
 
 ## Required Packages
 
-* keras (i used gpu) 
-* pandas
-* glob
-* numpy
-* tqdm
-* sklearn
-* PIL
-* tensorflow
+* keras 2.2.4 (I used the GPU version) 
+* pandas 0.24.2
+* numpy 1.16.4 
+* tqdm 4.32.1
+* sklearn 0.21.2
+* pillow 6.1.0 
+* tensorflow 1.14.0 
 
 ## Dataset
 
-The dataset can be downloaded [here](http://https://www.kaggle.com/moltean/fruits/ "Dataset").
+The dataset can be downloaded [here](https://kaggle.com/moltean/fruits/ "Dataset").
 
 The data should be placed in the *fruits* folder so that the *Test* and *Training* folders of the dataset are on the same level as *internet*.
